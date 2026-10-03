@@ -1,0 +1,67 @@
+// Shows one state's loaded observations below the map. Reads whatever
+// `/api/states/{code}` returns, so as more metrics get loaded by the
+// pipeline, more cards appear here automatically -- nothing here needs
+// to change.
+export default function StatePanel({ profile, loading }) {
+  if (loading) {
+    return <div className="state-panel">Loading…</div>;
+  }
+  if (!profile) {
+    return (
+      <div className="state-panel state-panel-empty">
+        <p>Click a state on the map to see its profile.</p>
+      </div>
+    );
+  }
+
+  const { state, observations } = profile;
+
+  return (
+    <div className="state-panel">
+      <h2>{state.name}</h2>
+      {observations.length === 0 && <p>No data loaded for this state yet.</p>}
+      {observations.map((o) => (
+        <div className="metric-card" key={o.metric_slug}>
+          <div className="metric-card-header">
+            <span className="metric-category">{o.category_name}</span>
+            <h3>{o.metric_name}</h3>
+          </div>
+
+          {o.suppressed || o.female_value == null ? (
+            <p>No reliable estimate for {state.name}.</p>
+          ) : (
+            <dl className="metric-values">
+              <div>
+                <dt>Women</dt>
+                <dd>{formatValue(o.female_value, o.unit)}</dd>
+              </div>
+              <div>
+                <dt>Men</dt>
+                <dd>{formatValue(o.male_value, o.unit)}</dd>
+              </div>
+            </dl>
+          )}
+
+          <details className="metric-source">
+            <summary>Source &amp; definition</summary>
+            <p>{o.definition}</p>
+            <p>
+              {o.source_title} ({o.source_release}), {o.year}.{" "}
+              <a href={o.source_url} target="_blank" rel="noreferrer">
+                View source
+              </a>
+            </p>
+          </details>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function formatValue(value, unit) {
+  if (unit === "usd") return `$${Math.round(value).toLocaleString()}`;
+  if (unit === "percent") return `${value.toFixed(1)}%`;
+  if (unit === "years") return `${value.toFixed(1)} years`;
+  if (unit === "per_100k") return `${value.toFixed(1)} per 100,000`;
+  return value.toLocaleString();
+}
