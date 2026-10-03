@@ -96,9 +96,14 @@ def metric_map(slug: str):
 
 @app.get("/api/states")
 def list_states():
-    """Every state (+ DC + US) -- powers the map's clickable regions and any state picker."""
+    """Every state (+ DC + US) -- powers the map's clickable regions and any state picker.
+
+    Includes `fips`: the two-digit code standard US map data (like the one the
+    frontend draws from) uses to identify each state -- that's what lets the
+    map match its shapes to our rows without a separate lookup table.
+    """
     with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
-        cur.execute("SELECT code, name, kind FROM states ORDER BY name")
+        cur.execute("SELECT code, name, kind, fips FROM states ORDER BY name")
         return cur.fetchall()
 
 

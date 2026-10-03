@@ -15,12 +15,16 @@ import { interpolateRgbBasis } from "d3-interpolate";
 // our data.
 import usStatesTopoJSON from "us-atlas/states-10m.json";
 
-// Diverging pair from the project's design system: cool blue <-> warm red,
-// with a neutral gray at the midpoint (never a hue at zero -- zero has to
-// read as "no gap," not as a color of its own).
-const COLOR_NEGATIVE = "#0d366b"; // deep blue: one sex earns more
+// Diverging pair: blue for men, pink for women, with a neutral gray at the
+// midpoint (never a hue at zero -- zero has to read as "no gap," not as a
+// color of its own). Deliberately blue/pink rather than blue/red -- red
+// and blue read as a US political-party cue before they read as "a sex
+// has a higher value here," which isn't a message this map intends to
+// send. Validated against the project's accessibility checks (CVD
+// separation, contrast, lightness) as a pair before use.
+const COLOR_WOMEN_HIGHER = "#d6497e"; // pink: women have the higher value
 const COLOR_NEUTRAL = "#f0efec"; // gray: at or near parity
-const COLOR_POSITIVE = "#d03b3b"; // deep red: the other sex earns more
+const COLOR_MEN_HIGHER = "#1f5fa8"; // blue: men have the higher value
 const COLOR_NO_DATA = "#e1e0d9"; // light gray: nothing loaded yet for this metric
 
 /**
@@ -72,7 +76,7 @@ export default function ChoroplethMap({
       .filter((v) => !v.suppressed && v.female_value != null && v.male_value != null)
       .map((v) => v.male_value - v.female_value);
     const maxAbsGap = Math.max(1, ...gaps.map(Math.abs));
-    return scaleDiverging(interpolateRgbBasis([COLOR_NEGATIVE, COLOR_NEUTRAL, COLOR_POSITIVE]))
+    return scaleDiverging(interpolateRgbBasis([COLOR_WOMEN_HIGHER, COLOR_NEUTRAL, COLOR_MEN_HIGHER]))
       .domain([-maxAbsGap, 0, maxAbsGap]);
   }, [values]);
 

@@ -13,7 +13,7 @@ export default function Legend({ vertical = false }) {
       <div
         className="legend-bar"
         style={{
-          background: `linear-gradient(${gradientDirection}, #0d366b, #f0efec, #d03b3b)`,
+          background: `linear-gradient(${gradientDirection}, #d6497e, #f0efec, #1f5fa8)`,
         }}
       />
       <span className="legend-label">{vertical ? "Higher for women" : "Higher for men"}</span>
