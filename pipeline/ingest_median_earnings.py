@@ -134,31 +134,77 @@ def build_observations(header, state_rows, us_header, us_rows, fips_to_code):
     return observations
 
 
-def upsert_source(cur):
-    """Insert this release's source row, or update its retrieved_on if it
-    already exists. Returns the source's id either way."""
+def _source_url_for(fips):
+    """Build a data.census.gov deep link scoped to one state.
+
+    `g=0400000US{fips}` is the confirmed geography-scoping parameter for
+    "this one state" in Census's own deep-linking guide (worked example:
+    g=0400000US24 for Maryland). There's also a `tid=` parameter that
+    distinguishes which exact table product (e.g. Detailed Table vs.
+    Subject Table) the page should load, but its correct value for a
+    Detailed Table like B20017 couldn't be confirmed from an authoritative
+    Census source -- rather than guess at it and risk a broken or
+    misleading link, this URL sticks to the parameters that are confirmed
+    to work: the table id, the state scope, and the year.
+
+    `fips=None` means the national row, which has no state to scope to,
+    so it falls back to the original unscoped table URL.
+    """
+    base = f"https://data.census.gov/table?q={TABLE}&y={ACS_YEAR}"
+    if fips is None:
+        return base
+    return f"{base}&g=0400000US{fips}"
+
+
+def upsert_source(cur, state_code, fips):
+    """Insert one state's source row (or the national one, if fips is
+    None), or update its retrieved_on if it already exists. Each state
+    gets its own row -- and its own slug and URL -- so its citation can
+    link to a Census page scoped to that state specifically, instead of
+    every state pointing at the same generic table page.
+
+    Returns the source's id either way."""
     cur.execute(
         """
         INSERT INTO sources (slug, kind, publisher, title, release, table_ref, url, retrieved_on)
         VALUES (%(slug)s, 'dataset', %(publisher)s, %(title)s, %(release)s, %(table_ref)s, %(url)s, %(retrieved_on)s)
-        ON CONFLICT (slug) DO UPDATE SET retrieved_on = EXCLUDED.retrieved_on
+        ON CONFLICT (slug) DO UPDATE SET
+            url          = EXCLUDED.url,
+            retrieved_on = EXCLUDED.retrieved_on
         RETURNING id
         """,
         {
-            "slug": f"acs1-{ACS_YEAR}-{TABLE.lower()}",
+            "slug": f"acs1-{ACS_YEAR}-{TABLE.lower()}-{state_code.lower()}",
             "publisher": "U.S. Census Bureau",
             "title": "American Community Survey 1-Year Estimates",
             "release": str(ACS_YEAR),
             "table_ref": TABLE,
-            "url": f"https://data.census.gov/table?q={TABLE}&y={ACS_YEAR}",
+            "url": _source_url_for(fips),
             "retrieved_on": date.today(),
         },
     )
     return cur.fetchone()[0]
 
 
-def upsert_observations(cur, observations, source_id):
-    """Insert all observation rows, updating any that already exist."""
+def upsert_all_sources(cur, observations, code_to_fips):
+    """Create (or refresh) one source row per state_code that appears in
+    `observations`, and return {state_code: source_id}."""
+    source_id_by_code = {}
+    for state_code in sorted({o["state_code"] for o in observations}):
+        # "US" has a placeholder fips ('00') in the states table so it can
+        # still have a row/sort position there, but '00' isn't a real
+        # Census geography code -- the national row has no state to scope
+        # a deep link to, so it gets the unscoped URL instead.
+        fips = None if state_code == "US" else code_to_fips.get(state_code)
+        source_id_by_code[state_code] = upsert_source(cur, state_code, fips)
+    return source_id_by_code
+
+
+def upsert_observations(cur, observations, source_id_by_code):
+    """Insert all observation rows, updating any that already exist.
+
+    Each observation gets the source_id matching its own state, not one
+    shared id for every row."""
     sql = """
         INSERT INTO observations
             (state_code, metric_slug, year, female_value, male_value,
@@ -182,7 +228,7 @@ def upsert_observations(cur, observations, source_id):
             o["female_moe"],
             o["male_moe"],
             o["suppressed"],
-            source_id,
+            source_id_by_code[o["state_code"]],
         )
         for o in observations
     ]
@@ -198,16 +244,18 @@ def main():
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
             cur.execute("SELECT code, fips FROM states")
-            fips_to_code = {fips: code for code, fips in cur.fetchall()}
+            rows = cur.fetchall()
+            fips_to_code = {fips: code for code, fips in rows}
+            code_to_fips = {code: fips for code, fips in rows}
 
             observations = build_observations(header, state_rows, us_header, us_rows, fips_to_code)
             suppressed_count = sum(1 for o in observations if o["suppressed"])
             print(f"  built {len(observations)} observation rows ({suppressed_count} suppressed)")
 
-            source_id = upsert_source(cur)
-            print(f"  source row id: {source_id}")
+            source_id_by_code = upsert_all_sources(cur, observations, code_to_fips)
+            print(f"  created/updated {len(source_id_by_code)} per-state source rows")
 
-            n_loaded = upsert_observations(cur, observations, source_id)
+            n_loaded = upsert_observations(cur, observations, source_id_by_code)
             print(f"  loaded {n_loaded} observations into the database")
         conn.commit()
 
