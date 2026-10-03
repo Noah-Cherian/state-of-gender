@@ -14,6 +14,10 @@ export function fetchStates() {
   return getJSON("/api/states");
 }
 
+export function fetchMetrics() {
+  return getJSON("/api/metrics");
+}
+
 export function fetchMetricMap(slug) {
   return getJSON(`/api/metrics/${slug}`);
 }

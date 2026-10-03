@@ -30,9 +30,26 @@ const COLOR_NO_DATA = "#e1e0d9"; // light gray: nothing loaded yet for this metr
  * centered on zero (parity) and extends equally in both directions, so
  * a viewer reads direction and size, not a verdict.
  */
+// Formats a raw value for display based on the metric's unit, so the
+// tooltip reads correctly whether it's dollars, a percentage, a per-100k
+// rate, or a plain count -- instead of assuming every metric is money.
+function formatValue(value, unit) {
+  switch (unit) {
+    case "usd":
+      return `$${value.toLocaleString()}`;
+    case "percent":
+      return `${value.toLocaleString()}%`;
+    case "per_100k":
+      return `${value.toLocaleString()} per 100k`;
+    default:
+      return value.toLocaleString();
+  }
+}
+
 export default function ChoroplethMap({
   states, // [{ code, name, fips }]
   values, // [{ state_code, female_value, male_value, suppressed }]
+  unit, // the selected metric's unit -- controls tooltip formatting
   onSelectState,
   selectedCode,
 }) {
@@ -138,8 +155,8 @@ export default function ChoroplethMap({
             <p>No reliable estimate for this state.</p>
           ) : (
             <>
-              <p>Women: {hovered.female_value.toLocaleString()}</p>
-              <p>Men: {hovered.male_value.toLocaleString()}</p>
+              <p>Women: {formatValue(hovered.female_value, unit)}</p>
+              <p>Men: {formatValue(hovered.male_value, unit)}</p>
             </>
           )}
         </div>

@@ -50,6 +50,29 @@ body {
   margin: 0 0 4px;
 }
 
+.metric-picker {
+  margin-bottom: 12px;
+}
+
+.metric-picker label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.metric-picker select {
+  font-size: 0.95rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  color: var(--text-primary);
+  min-width: 220px;
+}
+
 .metric-definition {
   color: var(--text-secondary);
   margin-top: 0;

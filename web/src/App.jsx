@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { fetchStates, fetchMetricMap, fetchStateProfile } from "./api";
+import { fetchStates, fetchMetrics, fetchMetricMap, fetchStateProfile } from "./api";
 import ChoroplethMap from "./components/ChoroplethMap";
 import Legend from "./components/Legend";
 import StatePanel from "./components/StatePanel";
 import "./index.css";
 
-const METRIC_SLUG = "median_earnings"; // the one metric loaded so far
+const DEFAULT_METRIC_SLUG = "median_earnings"; // shown first, before the dropdown is even touched
 
 export default function App() {
   const [states, setStates] = useState([]);
+  const [metrics, setMetrics] = useState([]); // every metric, for the dropdown
+  const [selectedMetricSlug, setSelectedMetricSlug] = useState(DEFAULT_METRIC_SLUG);
   const [metric, setMetric] = useState(null);
   const [values, setValues] = useState([]);
   const [loadError, setLoadError] = useState(null);
@@ -17,16 +19,25 @@ export default function App() {
   const [profile, setProfile] = useState(null);
   const [profileLoading, setProfileLoading] = useState(false);
 
-  // load the map's data once, when the page first opens
+  // load the state list and the full metric catalog once, when the page first opens
   useEffect(() => {
-    Promise.all([fetchStates(), fetchMetricMap(METRIC_SLUG)])
-      .then(([statesData, metricData]) => {
+    Promise.all([fetchStates(), fetchMetrics()])
+      .then(([statesData, metricsData]) => {
         setStates(statesData);
+        setMetrics(metricsData);
+      })
+      .catch((err) => setLoadError(err.message));
+  }, []);
+
+  // (re)load the map's data whenever the selected metric changes
+  useEffect(() => {
+    fetchMetricMap(selectedMetricSlug)
+      .then((metricData) => {
         setMetric(metricData.metric);
         setValues(metricData.values);
       })
       .catch((err) => setLoadError(err.message));
-  }, []);
+  }, [selectedMetricSlug]);
 
   // load one state's full profile whenever a new state is clicked
   useEffect(() => {
@@ -55,6 +66,25 @@ export default function App() {
       </header>
 
       <section className="map-section">
+        <div className="metric-picker">
+          <label htmlFor="metric-select">Metric</label>
+          <select
+            id="metric-select"
+            value={selectedMetricSlug}
+            onChange={(e) => setSelectedMetricSlug(e.target.value)}
+          >
+            {Object.entries(groupByCategory(metrics)).map(([categoryName, categoryMetrics]) => (
+              <optgroup key={categoryName} label={categoryName}>
+                {categoryMetrics.map((m) => (
+                  <option key={m.slug} value={m.slug}>
+                    {m.name}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+
         {metric && (
           <>
             <h2>{metric.name}</h2>
@@ -65,6 +95,7 @@ export default function App() {
         <ChoroplethMap
           states={states}
           values={values}
+          unit={metric?.unit}
           selectedCode={selectedCode}
           onSelectState={setSelectedCode}
         />
@@ -75,4 +106,16 @@ export default function App() {
       </section>
     </div>
   );
+}
+
+// Turns the flat metric list from the API into { categoryName: [metrics] },
+// preserving the order the API already sorted them in (by category, then
+// by each metric's own sort_order).
+function groupByCategory(metrics) {
+  const groups = {};
+  for (const m of metrics) {
+    if (!groups[m.category_name]) groups[m.category_name] = [];
+    groups[m.category_name].push(m);
+  }
+  return groups;
 }
