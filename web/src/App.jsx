@@ -3,6 +3,7 @@ import { fetchStates, fetchMetrics, fetchMetricMap, fetchStateProfile } from "./
 import ChoroplethMap from "./components/ChoroplethMap";
 import Legend from "./components/Legend";
 import StatePanel from "./components/StatePanel";
+import StateTable from "./components/StateTable";
 import "./index.css";
 
 const DEFAULT_METRIC_SLUG = "median_earnings"; // shown first, before the dropdown is even touched
@@ -14,6 +15,7 @@ export default function App() {
   const [metric, setMetric] = useState(null);
   const [values, setValues] = useState([]);
   const [loadError, setLoadError] = useState(null);
+  const [view, setView] = useState("map"); // "map" or "table" -- same data either way
 
   const [selectedCode, setSelectedCode] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -91,14 +93,40 @@ export default function App() {
             <p className="metric-definition">{metric.definition}</p>
           </>
         )}
-        <Legend />
-        <ChoroplethMap
-          states={states}
-          values={values}
-          unit={metric?.unit}
-          selectedCode={selectedCode}
-          onSelectState={setSelectedCode}
-        />
+        <div className="view-toggle" role="group" aria-label="View">
+          {["map", "table"].map((v) => (
+            <button
+              key={v}
+              type="button"
+              className={view === v ? "active" : ""}
+              aria-pressed={view === v}
+              onClick={() => setView(v)}
+            >
+              {v === "map" ? "Map" : "Table"}
+            </button>
+          ))}
+        </div>
+
+        {view === "map" ? (
+          <>
+            <Legend />
+            <ChoroplethMap
+              states={states}
+              values={values}
+              unit={metric?.unit}
+              selectedCode={selectedCode}
+              onSelectState={setSelectedCode}
+            />
+          </>
+        ) : (
+          <StateTable
+            states={states}
+            values={values}
+            unit={metric?.unit}
+            selectedCode={selectedCode}
+            onSelectState={setSelectedCode}
+          />
+        )}
       </section>
 
       <section className="panel-section">

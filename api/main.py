@@ -134,11 +134,28 @@ def state_profile(code: str):
                    o.suppressed,
                    src.title AS source_title, src.url AS source_url,
                    src.release AS source_release,
-                   src.notes AS source_notes
+                   src.notes AS source_notes,
+                   us.us_female_value, us.us_male_value, us.us_year
             FROM observations o
             JOIN metrics m ON m.slug = o.metric_slug
             JOIN categories c ON c.slug = m.category_slug
             JOIN sources src ON src.id = o.source_id
+            -- The national figure for the same metric, so each state card
+            -- can show it for context. LATERAL runs this small subquery
+            -- once per row, picking the most recent US value for that
+            -- row's metric. LEFT JOIN ... ON true keeps the row even when
+            -- there is no US figure (the three us_ columns are then null).
+            LEFT JOIN LATERAL (
+                SELECT u.female_value::float AS us_female_value,
+                       u.male_value::float AS us_male_value,
+                       u.year AS us_year
+                FROM observations u
+                WHERE u.state_code = 'US'
+                  AND u.metric_slug = o.metric_slug
+                  AND NOT u.suppressed
+                ORDER BY u.year DESC
+                LIMIT 1
+            ) us ON true
             WHERE o.state_code = %s
             ORDER BY c.sort_order, m.sort_order, o.year DESC
             """,

@@ -1,3 +1,5 @@
+import { formatValue } from "../gap";
+
 // Shows one state's loaded observations below the map. Reads whatever
 // `/api/states/{code}` returns, so as more metrics get loaded by the
 // pipeline, more cards appear here automatically -- nothing here needs
@@ -42,6 +44,16 @@ export default function StatePanel({ profile, loading }) {
             </dl>
           )}
 
+          {/* The national figure for context. Skipped on the US's own
+              profile, and when no national figure was loaded. */}
+          {state.code !== "US" && o.us_female_value != null && (
+            <p className="metric-national">
+              United States: Women {formatValue(o.us_female_value, o.unit)} · Men{" "}
+              {formatValue(o.us_male_value, o.unit)}
+              {o.us_year !== o.year && ` (${o.us_year})`}
+            </p>
+          )}
+
           <details className="metric-source">
             <summary>Source &amp; definition</summary>
             <p>{o.definition}</p>
@@ -60,12 +72,4 @@ export default function StatePanel({ profile, loading }) {
       ))}
     </div>
   );
-}
-
-function formatValue(value, unit) {
-  if (unit === "usd") return `$${Math.round(value).toLocaleString()}`;
-  if (unit === "percent") return `${value.toFixed(1)}%`;
-  if (unit === "years") return `${value.toFixed(1)} years`;
-  if (unit === "per_100k") return `${value.toFixed(1)} per 100,000`;
-  return value.toLocaleString();
 }
