@@ -24,11 +24,11 @@ See [Roadmap](#roadmap) for what's next.
 
 | Layer | Choice | Why |
 |---|---|---|
-| Database | PostgreSQL via [Neon](https://neon.tech) | Free serverless Postgres that only sleeps after 5 minutes idle (vs. competitors that pause for days) — fine for a side project with sporadic traffic. |
+| Database | PostgreSQL via [Neon](https://neon.tech) |
 | Backend | [FastAPI](https://fastapi.tiangolo.com/) (Python) | Lightweight, typed, fast to iterate on for a handful of read-only JSON endpoints. |
 | Data pipeline | Python scripts, `psycopg` | Idempotent ingest scripts that pull from public APIs (starting with the Census Bureau) and upsert into Postgres — safe to re-run as sources revise their data. |
 | Frontend | React + [Vite](https://vitejs.dev/) | Fast dev loop; component model fits a map + detail-panel UI well. |
-| Map rendering | [react-simple-maps](https://www.react-simple-maps.io/) + [d3-scale](https://d3js.org/d3-scale) | SVG-based US choropleth with a diverging color scale centered on zero (parity), so "no gap" reads as neutral gray rather than a color of its own. |
+| Map rendering | [react-simple-maps](https://www.react-simple-maps.io/) + [d3-scale](https://d3js.org/d3-scale) | SVG-based US choropleth with a log scale centered on parity
 
 ## Project structure
 
@@ -38,32 +38,6 @@ pipeline/  Ingest scripts — one per data source, methods include pulling from 
 api/       FastAPI backend serving the frontend
 web/       React + Vite frontend
 ```
-
-## Running it locally
-
-You'll need:
-- A Postgres database (this project uses Neon) with the schema from `db/001_schema.sql` and seed data from `db/002_seed.sql` applied.
-- A `.env` file (see `.env.example`) with `DATABASE_URL` and, for the Census pipeline, a free [Census API key](https://api.census.gov/data/key_signup.html) as `CENSUS_API_KEY`.
-
-Then, in three separate terminal tabs from the project root:
-
-```bash
-# 1. Backend API
-cd api
-uvicorn main:app --reload
-
-# 2. Frontend
-cd web
-npm install   # first time only
-npm run dev
-
-# 3. Data pipeline (one-off, re-run whenever a source updates)
-cd pipeline
-python3 ingest_median_earnings.py
-```
-
-The frontend expects the API at `http://127.0.0.1:8000` by default (set via `VITE_API_BASE` in `web/.env` if different). Open the address Vite prints, usually `http://localhost:5173`.
-
 ## Data model
 
 Every observation (a state's value for a metric, in a given year) points to a `sources` row describing exactly where it came from — publisher, title, release year, and a URL, scoped to that specific state wherever the source supports it. Nothing is stored pre-computed where it can be derived live instead: a gap between two values, for instance, is computed in a database view at query time, not written to a column that could drift out of sync with its inputs.
@@ -75,10 +49,8 @@ Laws work differently from numeric metrics — they're not something a public AP
 **Economics:** median earnings, labor force participation, poverty rate
 **Education:** bachelor's degree rate, college enrollment, STEM degree share
 **Health & Safety:** life expectancy, suicide mortality, homicide mortality
-**Representation:** state legislative seats, statewide elected officials, incarceration rate
-**Law & Policy:** parental leave, equal pay protections, reproductive health law
-
-(Currently, only median earnings has data loaded — see [Roadmap](#roadmap).)
+**Representation:** state legislative seats, incarceration rate
+**Law & Policy: (PLANNED)** parental leave, equal pay protections, reproductive health law
 
 ## Roadmap
 
