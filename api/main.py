@@ -127,7 +127,8 @@ def state_profile(code: str):
                    o.male_value::float AS male_value,
                    o.suppressed,
                    src.title AS source_title, src.url AS source_url,
-                   src.release AS source_release
+                   src.release AS source_release,
+                   src.notes AS source_notes
             FROM observations o
             JOIN metrics m ON m.slug = o.metric_slug
             JOIN categories c ON c.slug = m.category_slug

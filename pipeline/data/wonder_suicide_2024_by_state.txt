@@ -1,0 +1,175 @@
+"Notes"	"Sex"	"Sex Code"	"State"	"State Code"	Deaths	Population	Crude Rate	Crude Rate Lower 95% Confidence Interval	Crude Rate Upper 95% Confidence Interval	Age Adjusted Rate	Age Adjusted Rate Lower 95% Confidence Interval	Age Adjusted Rate Upper 95% Confidence Interval
+	"Female"	"F"	"Alabama"	"01"	151	2654529	5.7	4.8	6.6	5.7	4.8	6.7
+	"Female"	"F"	"Alaska"	"02"	36	351378	10.2	7.2	14.2	10.4	7.3	14.6
+	"Female"	"F"	"Arizona"	"04"	330	3798275	8.7	7.8	9.6	8.5	7.6	9.5
+	"Female"	"F"	"Arkansas"	"05"	100	1563821	6.4	5.1	7.6	6.4	5.2	7.8
+	"Female"	"F"	"California"	"06"	847	19759174	4.3	4.0	4.6	4.0	3.8	4.3
+	"Female"	"F"	"Colorado"	"08"	304	2940582	10.3	9.2	11.5	9.9	8.8	11.1
+	"Female"	"F"	"Connecticut"	"09"	91	1871258	4.9	3.9	6.0	4.4	3.5	5.5
+	"Female"	"F"	"Delaware"	"10"	19	543363	3.5	2.1	5.5	3.4	2.0	5.6
+	"Female"	"F"	"District of Columbia"	"11"	Suppressed	369447	Suppressed	Suppressed	Suppressed	Suppressed	Suppressed	Suppressed
+	"Female"	"F"	"Florida"	"12"	723	11880764	6.1	5.6	6.5	5.6	5.2	6.1
+	"Female"	"F"	"Georgia"	"13"	294	5735675	5.1	4.5	5.7	4.9	4.3	5.5
+	"Female"	"F"	"Hawaii"	"15"	45	721711	6.2	4.5	8.3	6.2	4.5	8.5
+	"Female"	"F"	"Idaho"	"16"	89	994520	8.9	7.2	11.0	8.7	7.0	10.8
+	"Female"	"F"	"Illinois"	"17"	285	6427826	4.4	3.9	4.9	4.4	3.9	5.0
+	"Female"	"F"	"Indiana"	"18"	210	3488771	6.0	5.2	6.8	6.0	5.2	6.9
+	"Female"	"F"	"Iowa"	"19"	96	1614023	5.9	4.8	7.3	6.3	5.1	7.7
+	"Female"	"F"	"Kansas"	"20"	108	1480281	7.3	5.9	8.7	7.8	6.3	9.4
+	"Female"	"F"	"Kentucky"	"21"	162	2313708	7.0	5.9	8.1	6.9	5.9	8.1
+	"Female"	"F"	"Louisiana"	"22"	131	2350670	5.6	4.6	6.5	5.6	4.7	6.7
+	"Female"	"F"	"Maine"	"23"	63	713075	8.8	6.8	11.3	8.9	6.8	11.7
+	"Female"	"F"	"Maryland"	"24"	136	3218208	4.2	3.5	4.9	4.2	3.5	4.9
+	"Female"	"F"	"Massachusetts"	"25"	160	3648663	4.4	3.7	5.1	4.0	3.3	4.7
+	"Female"	"F"	"Michigan"	"26"	284	5117166	5.5	4.9	6.2	5.4	4.8	6.1
+	"Female"	"F"	"Minnesota"	"27"	185	2891485	6.4	5.5	7.3	6.3	5.4	7.3
+	"Female"	"F"	"Mississippi"	"28"	70	1518377	4.6	3.6	5.8	4.5	3.5	5.8
+	"Female"	"F"	"Missouri"	"29"	230	3164566	7.3	6.3	8.2	7.1	6.2	8.1
+	"Female"	"F"	"Montana"	"30"	74	561013	13.2	10.4	16.6	13.0	10.1	16.5
+	"Female"	"F"	"Nebraska"	"31"	52	996825	5.2	3.9	6.8	5.2	3.9	6.9
+	"Female"	"F"	"Nevada"	"32"	150	1623328	9.2	7.8	10.7	8.7	7.4	10.3
+	"Female"	"F"	"New Hampshire"	"33"	51	705665	7.2	5.4	9.5	7.0	5.2	9.5
+	"Female"	"F"	"New Jersey"	"34"	137	4822914	2.8	2.4	3.3	2.7	2.3	3.2
+	"Female"	"F"	"New Mexico"	"35"	105	1070079	9.8	7.9	11.7	9.6	7.8	11.8
+	"Female"	"F"	"New York"	"36"	374	10161956	3.7	3.3	4.1	3.5	3.2	3.9
+	"Female"	"F"	"North Carolina"	"37"	303	5652106	5.4	4.8	6.0	5.3	4.7	6.0
+	"Female"	"F"	"North Dakota"	"38"	27	387666	7.0	4.6	10.1	8.0	5.2	11.8
+	"Female"	"F"	"Ohio"	"39"	369	6020090	6.1	5.5	6.8	6.2	5.6	6.9
+	"Female"	"F"	"Oklahoma"	"40"	153	2057094	7.4	6.3	8.6	7.4	6.2	8.7
+	"Female"	"F"	"Oregon"	"41"	212	2145562	9.9	8.6	11.2	9.0	7.8	10.4
+	"Female"	"F"	"Pennsylvania"	"42"	343	6629546	5.2	4.6	5.7	5.1	4.5	5.7
+	"Female"	"F"	"Rhode Island"	"44"	14	567137	2.5	1.3	4.1	2.3	1.2	4.1
+	"Female"	"F"	"South Carolina"	"45"	182	2816866	6.5	5.5	7.4	6.4	5.5	7.5
+	"Female"	"F"	"South Dakota"	"46"	39	454034	8.6	6.1	11.7	9.7	6.9	13.4
+	"Female"	"F"	"Tennessee"	"47"	258	3682002	7.0	6.2	7.9	6.8	5.9	7.7
+	"Female"	"F"	"Texas"	"48"	906	15673160	5.8	5.4	6.2	5.7	5.4	6.1
+	"Female"	"F"	"Utah"	"49"	134	1727416	7.8	6.4	9.1	7.9	6.6	9.4
+	"Female"	"F"	"Vermont"	"50"	22	326695	6.7	4.2	10.2	6.5	3.9	10.4
+	"Female"	"F"	"Virginia"	"51"	250	4460629	5.6	4.9	6.3	5.3	4.6	6.0
+	"Female"	"F"	"Washington"	"53"	290	3951258	7.3	6.5	8.2	7.1	6.3	8.0
+	"Female"	"F"	"West Virginia"	"54"	47	886162	5.3	3.9	7.1	5.5	4.0	7.4
+	"Female"	"F"	"Wisconsin"	"55"	177	2975533	5.9	5.1	6.8	5.9	5.0	6.9
+	"Female"	"F"	"Wyoming"	"56"	21	287054	7.3	4.5	11.2	7.4	4.6	11.6
+	"Male"	"M"	"Alabama"	"01"	686	2503170	27.4	25.4	29.5	27.2	25.1	29.3
+	"Male"	"M"	"Alaska"	"02"	186	388755	47.8	41.0	54.7	47.0	40.4	54.7
+	"Male"	"M"	"Arizona"	"04"	1186	3784109	31.3	29.6	33.1	29.4	27.7	31.2
+	"Male"	"M"	"Arkansas"	"05"	492	1524533	32.3	29.4	35.1	32.0	29.2	35.0
+	"Male"	"M"	"California"	"06"	3175	19672089	16.1	15.6	16.7	15.3	14.7	15.8
+	"Male"	"M"	"Colorado"	"08"	1009	3016911	33.4	31.4	35.5	31.6	29.7	33.7
+	"Male"	"M"	"Connecticut"	"09"	303	1803811	16.8	14.9	18.7	16.0	14.2	18.0
+	"Male"	"M"	"Delaware"	"10"	106	508554	20.8	16.9	24.8	21.0	17.1	25.6
+	"Male"	"M"	"District of Columbia"	"11"	36	332803	10.8	7.6	15.0	9.9	6.9	13.9
+	"Male"	"M"	"Florida"	"12"	2910	11491451	25.3	24.4	26.2	22.5	21.7	23.4
+	"Male"	"M"	"Georgia"	"13"	1354	5445203	24.9	23.5	26.2	24.5	23.2	25.9
+	"Male"	"M"	"Hawaii"	"15"	155	724435	21.4	18.0	24.8	21.1	17.9	24.9
+	"Male"	"M"	"Idaho"	"16"	348	1007099	34.6	30.9	38.2	33.8	30.2	37.6
+	"Male"	"M"	"Illinois"	"17"	1141	6282332	18.2	17.1	19.2	17.5	16.5	18.5
+	"Male"	"M"	"Indiana"	"18"	965	3435504	28.1	26.3	29.9	27.9	26.1	29.7
+	"Male"	"M"	"Iowa"	"19"	452	1627465	27.8	25.2	30.3	27.9	25.3	30.6
+	"Male"	"M"	"Kansas"	"20"	419	1490325	28.1	25.4	30.8	28.0	25.4	30.9
+	"Male"	"M"	"Kentucky"	"21"	682	2274664	30.0	27.7	32.2	29.4	27.2	31.7
+	"Male"	"M"	"Louisiana"	"22"	523	2247070	23.3	21.3	25.3	23.2	21.3	25.4
+	"Male"	"M"	"Maine"	"23"	222	691937	32.1	27.9	36.3	29.9	25.9	34.4
+	"Male"	"M"	"Maryland"	"24"	494	3045012	16.2	14.8	17.7	15.7	14.3	17.2
+	"Male"	"M"	"Massachusetts"	"25"	488	3487508	14.0	12.8	15.2	12.9	11.7	14.1
+	"Male"	"M"	"Michigan"	"26"	1164	5023293	23.2	21.8	24.5	22.2	20.9	23.6
+	"Male"	"M"	"Minnesota"	"27"	633	2901666	21.8	20.1	23.5	21.2	19.5	23.0
+	"Male"	"M"	"Mississippi"	"28"	380	1424668	26.7	24.0	29.4	26.7	24.0	29.6
+	"Male"	"M"	"Missouri"	"29"	922	3080900	29.9	28.0	31.9	29.1	27.2	31.1
+	"Male"	"M"	"Montana"	"30"	246	576220	42.7	37.4	48.0	40.3	35.3	45.9
+	"Male"	"M"	"Nebraska"	"31"	245	1008640	24.3	21.2	27.3	24.5	21.5	27.8
+	"Male"	"M"	"Nevada"	"32"	526	1644139	32.0	29.3	34.7	30.6	28.0	33.4
+	"Male"	"M"	"New Hampshire"	"33"	197	703367	28.0	24.1	31.9	25.9	22.3	30.1
+	"Male"	"M"	"New Jersey"	"34"	545	4677937	11.7	10.7	12.6	10.9	10.0	11.9
+	"Male"	"M"	"New Mexico"	"35"	427	1060177	40.3	36.5	44.1	39.5	35.8	43.6
+	"Male"	"M"	"New York"	"36"	1327	9705292	13.7	12.9	14.4	13.1	12.4	13.8
+	"Male"	"M"	"North Carolina"	"37"	1317	5393918	24.4	23.1	25.7	23.7	22.4	25.0
+	"Male"	"M"	"North Dakota"	"38"	118	408902	28.9	23.7	34.1	29.5	24.3	35.5
+	"Male"	"M"	"Ohio"	"39"	1487	5863214	25.4	24.1	26.7	24.7	23.4	26.0
+	"Male"	"M"	"Oklahoma"	"40"	715	2038299	35.1	32.5	37.6	34.8	32.3	37.5
+	"Male"	"M"	"Oregon"	"41"	729	2126809	34.3	31.8	36.8	31.3	29.0	33.7
+	"Male"	"M"	"Pennsylvania"	"42"	1502	6449205	23.3	22.1	24.5	21.9	20.8	23.1
+	"Male"	"M"	"Rhode Island"	"44"	91	545171	16.7	13.4	20.5	15.7	12.5	19.5
+	"Male"	"M"	"South Carolina"	"45"	722	2661965	27.1	25.1	29.1	26.4	24.4	28.4
+	"Male"	"M"	"South Dakota"	"46"	159	470635	33.8	28.5	39.0	33.4	28.3	39.2
+	"Male"	"M"	"Tennessee"	"47"	971	3545748	27.4	25.7	29.1	26.7	25.0	28.4
+	"Male"	"M"	"Texas"	"48"	3584	15617671	22.9	22.2	23.7	23.0	22.2	23.8
+	"Male"	"M"	"Utah"	"49"	531	1776197	29.9	27.4	32.4	31.1	28.5	34.0
+	"Male"	"M"	"Vermont"	"50"	83	321798	25.8	20.5	32.0	23.3	18.3	29.4
+	"Male"	"M"	"Virginia"	"51"	946	4350566	21.7	20.4	23.1	20.8	19.5	22.2
+	"Male"	"M"	"Washington"	"53"	931	4006922	23.2	21.7	24.7	22.1	20.6	23.5
+	"Male"	"M"	"West Virginia"	"54"	256	883817	29.0	25.4	32.5	27.5	24.1	31.3
+	"Male"	"M"	"Wisconsin"	"55"	743	2985442	24.9	23.1	26.7	23.9	22.2	25.8
+	"Male"	"M"	"Wyoming"	"56"	148	300564	49.2	41.3	57.2	47.3	39.8	56.0
+"---"
+"Dataset: Underlying Cause of Death, 2018-2024, Single Race"
+"Query Parameters:"
+"Injury Intent: Suicide"
+"Year/Month: 2024"
+"Group By: Sex; State"
+"Show Totals: Disabled"
+"Show Zero Values: True"
+"Show Suppressed: True"
+"Standard Population: 2000 U.S. Std. Population"
+"Calculate Rates Per: 100,000"
+"Rate Options: Default intercensal populations for years 2001-2009 (except Infant Age Groups)"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/ucd-expanded.html for more information."
+"---"
+"Query Date: Oct 7, 2026 11:54:44 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. National Vital Statistics"
+"System, Mortality 2018-2024 on CDC WONDER Online Database, released in 2026. Data are from the Multiple Cause of Death Files,"
+"2018-2024, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative"
+"Program. Accessed at http://wonder.cdc.gov/ucd-icd10-expanded.html on Oct 7, 2026 11:54:44 PM"
+"---"
+Messages:
+"1. Totals are not available for these results due to suppression constraints. More Information:"
+"http://wonder.cdc.gov/wonder/help/faq.html#Privacy."
+"---"
+Caveats:
+"1. Data are Suppressed when the data meet the criteria for confidentiality constraints. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd-expanded.html#Assurance of Confidentiality."
+"2. The populations used to calculate standard age-adjusted rates are documented here: More information:"
+"http://wonder.cdc.gov/wonder/help/ucd-expanded.html#2000 Standard Population."
+"3. The method used to calculate age-adjusted rates is documented here: More information:"
+"http://wonder.cdc.gov/wonder/help/ucd-expanded.html#Age-Adjusted Rates."
+"4. Deaths for persons of unknown age are included in counts and crude rates, but are not included in age-adjusted rates."
+"5. The method used to calculate 95% confidence intervals is documented here: More information:"
+"http://wonder.cdc.gov/wonder/help/ucd-expanded.html#Confidence-Intervals."
+"6. The population figures for year 2024 are single-race estimates of the July 1 resident population, from the Vintage 2024"
+"postcensal series released by the Census Bureau on June 27, 2024. The 2024 series is based on the Modified Blended Base produced"
+"by the US Census Bureau in lieu of the April 1, 2020 decennial population count. The Modified Blended Base consists of the blend"
+"of Vintage 2020 postcensal population estimates for April 1, 2020, 2020 Demographic Analysis Estimates, and 2020 Census data"
+"from the internal Census Edited File (CEF). The population figures for year 2023 are single-race estimates of the July 1"
+"resident population, from the Vintage 2023 postcensal series released by the Census Bureau on June 27, 2024. The 2023 series is"
+"based on the Modified Blended Base produced by the US Census Bureau in lieu of the April 1, 2020 decennial population count. The"
+"Modified Blended Base consists of the blend of Vintage 2020 postcensal population estimates for April 1, 2020, 2020 Demographic"
+"Analysis Estimates, and 2020 Census data from the internal Census Edited File (CEF). The population figures for years 2022 are"
+"single-race estimates of the July 1 resident population, from the Vintage 2022 postcensal series released by the Census Bureau"
+"on June 22, 2023. The 2022 series is based on the Modified Blended Base produced by the US Census Bureau in lieu of the April 1,"
+"2020 decennial population count. The Modified Blended Base consists of the blend of Vintage 2020 postcensal population estimates"
+"for April 1, 2020, 2020 Demographic Analysis Estimates, and 2020 Census data from the internal Census Edited File (CEF). The"
+"population figures for years 2021 are single-race estimates of the July 1 resident population, based on the Blended Base"
+"produced by the US Census Bureau in lieu of the April 1, 2020 decennial population count, from the Vintage 2021 postcensal"
+"series released by the Census Bureau on June 30, 2022. The population figures for year 2020 are single-race estimates of the"
+"July 1 resident population, from the Vintage 2020 postcensal series based on April 2010 Census, released by the Census Bureau on"
+"July 27, 2021. The population figures for year 2019 are single-race estimates of the July 1 resident population, from the"
+"Vintage 2019 postcensal series based on April 2010 Census, released by the Census Bureau on June 25, 2020. The population"
+"figures for year 2018 are single-race estimates of the July 1 resident population, from the Vintage 2018 postcensal series based"
+"on April 2010 Census, released by the Census Bureau on June 20, 2019. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd-expanded.html#Population Data."
+"7. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the"
+"resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/ucd-expanded.html#Age"
+"Group."
+"8. Connecticut population estimates for 2022 and later years are reported for 9 planning regions as county equivalent areas,"
+"instead of the former 8 legacy counties in the Vintage 2022 postcensal series released by the Census Bureau on June 22, 2023,"
+"and in the Vintage 2023 postcensal series released by the Census Bureau on June 27, 2024. Populations estimates for the former"
+"counties are not available for 2022 and later years. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd-expanded.html#Connecticut-2022."
+"9. After the creation of the final 2023 dataset, North Carolina updated the cause of death information for over 900 death"
+"certificates to include a cause of death code indicating drug overdose (ICD-10 underlying cause-of-death codes: X40-X44,"
+"X60-X64, X85, and Y10-Y14). Jurisdictions can continue to update death certificates after the closing of the mortality file. As"
+"a result, users should consider that the actual death count for drug overdose deaths for North Carolina in 2023 is over 4,400"
+"deaths, with a crude rate of approximately 41.0 per 100,000 population, and an age-adjusted rate of approximately 42.1 per"
+"100,000 population. These deaths will not be updated on the final mortality datasets."

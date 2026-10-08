@@ -51,6 +51,10 @@ export default function StatePanel({ profile, loading }) {
                 View source
               </a>
             </p>
+            {/* Only some sources carry a note -- e.g. when the link can't
+                open the exact figure and the reader needs to know how to
+                find it. Sources without one show nothing extra. */}
+            {o.source_notes && <p className="metric-source-note">{o.source_notes}</p>}
           </details>
         </div>
       ))}

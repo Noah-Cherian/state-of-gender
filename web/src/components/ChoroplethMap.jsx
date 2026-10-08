@@ -45,6 +45,8 @@ function formatValue(value, unit) {
       return `${value.toLocaleString()}%`;
     case "per_100k":
       return `${value.toLocaleString()} per 100k`;
+    case "years":
+      return `${value.toFixed(1)} years`;
     default:
       return value.toLocaleString();
   }

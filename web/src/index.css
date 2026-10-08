@@ -210,6 +210,10 @@ body {
   margin-top: 8px;
 }
 
+.metric-source-note {
+  font-style: italic;
+}
+
 .metric-source summary {
   cursor: pointer;
   color: var(--text-secondary);
