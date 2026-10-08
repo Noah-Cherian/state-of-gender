@@ -4,14 +4,20 @@ import { formatValue } from "../gap";
 // `/api/states/{code}` returns, so as more metrics get loaded by the
 // pipeline, more cards appear here automatically -- nothing here needs
 // to change.
-export default function StatePanel({ profile, loading }) {
+// `view` is "map" or "table" -- only used so the empty-state hint points
+// at whichever one is on screen.
+export default function StatePanel({ profile, loading, view = "map" }) {
   if (loading) {
     return <div className="state-panel">Loading…</div>;
   }
   if (!profile) {
     return (
       <div className="state-panel state-panel-empty">
-        <p>Click a state on the map to see its profile.</p>
+        <p>
+          {view === "table"
+            ? "Click a state in the table to see its profile."
+            : "Click a state on the map to see its profile."}
+        </p>
       </div>
     );
   }

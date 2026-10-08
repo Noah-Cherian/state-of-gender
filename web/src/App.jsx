@@ -130,7 +130,7 @@ export default function App() {
       </section>
 
       <section className="panel-section">
-        <StatePanel profile={profile} loading={profileLoading} />
+        <StatePanel profile={profile} loading={profileLoading} view={view} />
       </section>
     </div>
   );
