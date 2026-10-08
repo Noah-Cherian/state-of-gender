@@ -4,6 +4,9 @@ A source-first map of measurable gender differences across every US state — le
 
 **Live site:** (https://state-of-gender.vercel.app/)
 
+<img width="828" height="715" alt="image" src="https://github.com/user-attachments/assets/e3a20992-ac9c-40d7-a86d-e34c8162cccf" />
+
+
 ## Why this exists
 
 Gender gap debates and discussions have been widespread on the internet for a long time. However, most participants in arguments rely heavily on anecdotal evidence as compared to data. So, my goal was to compile and present data into a intuitive, unbiased map. It is a neutral, side-by-side comparison where colors show direction and size of gap for any given metric. My hope is to continue to organize and extract data into this project so more people have relatively easy access to the numbers for an issue that strains our society to this day.
