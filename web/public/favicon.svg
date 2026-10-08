@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <!-- State of Gender icon: two equal bars, pink and blue, on a light
-       tile. Equal heights on purpose -- the site compares, it doesn't rank. -->
+       tile. Equal heights on purpose: the site compares, it doesn't rank. -->
   <rect width="32" height="32" rx="7" fill="#f0efec"/>
   <rect x="7" y="8" width="7.5" height="17" rx="2" fill="#d6497e"/>
   <rect x="17.5" y="8" width="7.5" height="17" rx="2" fill="#1f5fa8"/>
