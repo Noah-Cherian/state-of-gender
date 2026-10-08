@@ -5,7 +5,7 @@ import {
   Geography,
 } from "react-simple-maps";
 import { scaleDiverging } from "d3-scale";
-import { interpolateRgbBasis } from "d3-interpolate";
+import { interpolateRgb, piecewise } from "d3-interpolate";
 
 // US state boundaries, bundled from the us-atlas npm package rather than
 // fetched from a CDN at runtime -- one less thing that can go down or get
@@ -45,8 +45,6 @@ function formatValue(value, unit) {
       return `${value.toLocaleString()}%`;
     case "per_100k":
       return `${value.toLocaleString()} per 100k`;
-    case "years":
-      return `${value.toFixed(1)} years`;
     default:
       return value.toLocaleString();
   }
@@ -78,8 +76,13 @@ export default function ChoroplethMap({
       .filter((v) => !v.suppressed && v.female_value != null && v.male_value != null)
       .map((v) => v.male_value - v.female_value);
     const maxAbsGap = Math.max(1, ...gaps.map(Math.abs));
-    return scaleDiverging(interpolateRgbBasis([COLOR_WOMEN_HIGHER, COLOR_NEUTRAL, COLOR_MEN_HIGHER]))
-      .domain([-maxAbsGap, 0, maxAbsGap]);
+    // Two straight blends -- pink to gray, then gray to blue -- that meet
+    // exactly at gray. (The previous smooth-curve blend never actually
+    // reached gray in the middle, so near-parity states on both sides came
+    // out the same lavender and you couldn't tell which way they leaned.)
+    // This also matches the legend, which is the same three-stop gradient.
+    const blend = piecewise(interpolateRgb, [COLOR_WOMEN_HIGHER, COLOR_NEUTRAL, COLOR_MEN_HIGHER]);
+    return scaleDiverging(blend).domain([-maxAbsGap, 0, maxAbsGap]);
   }, [values]);
 
   function colorFor(entry) {
