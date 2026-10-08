@@ -55,7 +55,13 @@ export default function App() {
     return (
       <div className="error-banner">
         <p>Couldn't reach the API: {loadError}</p>
-        <p>Is it running? Start it with `uvicorn main:app --reload` in the api folder.</p>
+        {/* import.meta.env.DEV is true only under `npm run dev`, so
+            visitors to the live site never see developer instructions. */}
+        {import.meta.env.DEV ? (
+          <p>Is it running? Start it with `uvicorn main:app --reload` in the api folder.</p>
+        ) : (
+          <p>The data server may be waking up after a quiet spell. Try refreshing in a minute.</p>
+        )}
       </div>
     );
   }

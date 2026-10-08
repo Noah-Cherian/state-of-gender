@@ -10,6 +10,8 @@ Then open http://127.0.0.1:8000/docs for an interactive page that lists
 every endpoint and lets you try them in the browser.
 """
 
+import os
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from psycopg.rows import dict_row
@@ -18,13 +20,26 @@ from database import pool
 
 app = FastAPI(title="State of Gender API")
 
-# The frontend will run on a different address (e.g. localhost:5173) than
-# this API (localhost:8000). Browsers block requests between different
-# addresses by default unless the server explicitly allows it -- that's
-# what this does, for local development.
+# The frontend runs at a different address than this API (locally:
+# localhost:5173 vs localhost:8000; deployed: a vercel.app address vs an
+# onrender.com one). Browsers block a page from reading data from a
+# different address unless that address explicitly allows it -- this list
+# is that permission.
+#
+# The local addresses are always allowed. The deployed frontend's address
+# comes from the ALLOWED_ORIGINS setting on the host (Render), so it can be
+# set or changed there without editing code. Several can be given,
+# separated by commas.
+LOCAL_ORIGINS = ["http://localhost:5173", "http://localhost:3000"]
+DEPLOYED_ORIGINS = [
+    origin.strip().rstrip("/")
+    for origin in os.environ.get("ALLOWED_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=LOCAL_ORIGINS + DEPLOYED_ORIGINS,
     allow_methods=["GET"],
     allow_headers=["*"],
 )
