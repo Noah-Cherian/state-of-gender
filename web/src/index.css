@@ -80,11 +80,14 @@ body {
   font-size: 0.9rem;
 }
 
+.legend-block {
+  margin-bottom: 12px;
+}
+
 .legend {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
   font-size: 0.85rem;
   color: var(--text-secondary);
 }
@@ -96,39 +99,85 @@ body {
   border: 1px solid var(--border);
 }
 
-/* Right-hand-side legend: a vertical bar that reads bottom-to-top,
-   sitting next to the map instead of above it. */
-.map-row {
-  display: flex;
-  align-items: stretch;
-  gap: 24px;
+.legend-caption {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
-.map-row .map-wrap {
-  flex: 1;
-  min-width: 0;
+/* Map / Table switch */
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 16px;
 }
 
-.legend-vertical {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  margin-bottom: 0;
-  gap: 8px;
+.view-toggle button {
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 6px 16px;
+  border: none;
+  background: var(--surface-1);
+  color: var(--text-secondary);
+  cursor: pointer;
 }
 
-.legend-vertical .legend-bar {
-  flex: 1;
-  width: 10px;
-  height: auto;
-  min-height: 200px;
+.view-toggle button + button {
+  border-left: 1px solid var(--border);
 }
 
-.legend-vertical .legend-label {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+.view-toggle button.active {
+  background: var(--text-primary);
+  color: var(--surface-1);
+}
+
+/* Table view */
+.table-wrap {
+  overflow-x: auto; /* scrolls sideways on a narrow phone instead of squashing */
+}
+
+.state-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.state-table th,
+.state-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--gridline);
   white-space: nowrap;
+}
+
+.state-table th button {
+  font: inherit;
+  font-weight: 600;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.state-table tbody tr:hover {
+  background: var(--page-plane);
+}
+
+.state-table .national-row td {
+  font-weight: 600;
+  background: var(--page-plane);
+}
+
+.state-table .selected-row td {
+  background: #ecebe6;
+}
+
+.state-table .gap-cell {
+  color: var(--text-secondary);
 }
 
 .map-wrap {
@@ -150,6 +199,11 @@ body {
 
 .map-tooltip p {
   margin: 2px 0;
+}
+
+.map-tooltip-gap {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
 .panel-section {
@@ -202,6 +256,12 @@ body {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.metric-national {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
 }
 
 .metric-source {

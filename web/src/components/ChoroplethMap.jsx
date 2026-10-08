@@ -6,6 +6,7 @@ import {
 } from "react-simple-maps";
 import { scaleDiverging } from "d3-scale";
 import { interpolateRgb, piecewise } from "d3-interpolate";
+import { describeGap, formatValue, logRatio } from "../gap";
 
 // US state boundaries, bundled from the us-atlas npm package rather than
 // fetched from a CDN at runtime -- one less thing that can go down or get
@@ -28,28 +29,13 @@ const COLOR_MEN_HIGHER = "#1f5fa8"; // blue: men have the higher value
 const COLOR_NO_DATA = "#e1e0d9"; // light gray: nothing loaded yet for this metric
 
 /**
- * A clickable US choropleth map, colored by the gap between two values.
+ * A clickable US choropleth map, colored by how many times larger one
+ * sex's value is than the other's (see logRatio in ../gap.js).
  *
  * Deliberately agnostic about which value is "good": the color scale is
- * centered on zero (parity) and extends equally in both directions, so
- * a viewer reads direction and size, not a verdict.
+ * centered on parity and extends equally in both directions, so a viewer
+ * reads direction and size, not a verdict.
  */
-// Formats a raw value for display based on the metric's unit, so the
-// tooltip reads correctly whether it's dollars, a percentage, a per-100k
-// rate, or a plain count -- instead of assuming every metric is money.
-function formatValue(value, unit) {
-  switch (unit) {
-    case "usd":
-      return `$${value.toLocaleString()}`;
-    case "percent":
-      return `${value.toLocaleString()}%`;
-    case "per_100k":
-      return `${value.toLocaleString()} per 100k`;
-    default:
-      return value.toLocaleString();
-  }
-}
-
 export default function ChoroplethMap({
   states, // [{ code, name, fips }]
   values, // [{ state_code, female_value, male_value, suppressed }]
@@ -72,10 +58,15 @@ export default function ChoroplethMap({
   }, [states, values]);
 
   const colorScale = useMemo(() => {
-    const gaps = values
-      .filter((v) => !v.suppressed && v.female_value != null && v.male_value != null)
-      .map((v) => v.male_value - v.female_value);
-    const maxAbsGap = Math.max(1, ...gaps.map(Math.abs));
+    // Only real states set the scale; the national row isn't on the map.
+    const ratios = values
+      .filter((v) => v.state_code !== "US")
+      .map(logRatio)
+      .filter((r) => r != null);
+    // The floor (log2 of 1.1, i.e. a 10% difference) stops a metric where
+    // every state is near parity from stretching tiny differences into
+    // full-strength color.
+    const maxAbsGap = Math.max(Math.log2(1.1), ...ratios.map(Math.abs));
     // Two straight blends -- pink to gray, then gray to blue -- that meet
     // exactly at gray. (The previous smooth-curve blend never actually
     // reached gray in the middle, so near-parity states on both sides came
@@ -86,10 +77,8 @@ export default function ChoroplethMap({
   }, [values]);
 
   function colorFor(entry) {
-    if (!entry || entry.suppressed || entry.female_value == null || entry.male_value == null) {
-      return COLOR_NO_DATA;
-    }
-    return colorScale(entry.male_value - entry.female_value);
+    const ratio = logRatio(entry);
+    return ratio == null ? COLOR_NO_DATA : colorScale(ratio);
   }
 
   return (
@@ -166,6 +155,7 @@ export default function ChoroplethMap({
             <>
               <p>Women: {formatValue(hovered.female_value, unit)}</p>
               <p>Men: {formatValue(hovered.male_value, unit)}</p>
+              <p className="map-tooltip-gap">{describeGap(hovered)}</p>
             </>
           )}
         </div>
