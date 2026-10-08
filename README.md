@@ -14,7 +14,7 @@ Gender gap debates and discussions have been widespread on the internet for a lo
 This is a work in progress, being built incrementally. Current state:
 
 - **Database schema** — deployed to Postgres (hosted on [Neon](https://neon.tech)). Covers categories, states, metrics, sources, observations, law topics, and laws, with constraints that enforce the sourcing rules above (e.g., a law can't have a status without a citation; a missing data point must be explicitly flagged, not just left blank).
-- **Data pipeline** — one metric live end-to-end: median earnings by sex, for all 50 states + DC + the US, from the Census Bureau's American Community Survey. Each state's data point links to its own state-scoped Census page, not a generic one.
+- **Data pipeline** — eleven metrics live end-to-end: median earnings by sex, for all 50 states + DC + the US, from the Census Bureau's American Community Survey. Each state's data point links to its own state-scoped Census page, not a generic one.
 - **API** — a FastAPI backend serving states, metrics, and per-state profiles.
 - **Frontend** — a React app with an interactive, color-coded US map for the live metric, plus a details panel showing a clicked state's values and sourcing.
 
@@ -34,7 +34,7 @@ See [Roadmap](#roadmap) for what's next.
 
 ```
 db/        SQL schema and seed data (categories, states, metrics, law topics)
-pipeline/  Ingest scripts — one per data source, pull from a public API and upsert into Postgres
+pipeline/  Ingest scripts — one per data source, methods include pulling from a public API and upserting into Postgres, load files from CDC database, Bureau of Justice Statistics, and Center for American Women and Politics
 api/       FastAPI backend serving the frontend
 web/       React + Vite frontend
 ```
