@@ -1,22 +1,32 @@
 # State of Gender
 
-A source-first map of measurable gender differences across every US state — legal, economic, educational, health, and social. Every number on the map links back to the source where it came from (metadata like the publisher, the year, the precise definition, and (for laws) the statute itself).
 
-**Live site:** not yet deployed — running locally for now.
+## What is it
+
+A map of measurable gender differences across every US state — legal, economic, educational, health, and social. Every number on the map links back to the source where it came from (metadata like the publisher, the year, the precise definition, and (for laws) the statute itself).
+
+**Live site:** (https://state-of-gender.vercel.app/)
+
+<img width="828" height="715" alt="image" src="https://github.com/user-attachments/assets/e3a20992-ac9c-40d7-a86d-e34c8162cccf" />
 
 ## Why this exists
 
 Gender gap debates and discussions have been widespread on the internet for a long time. However, most participants in arguments rely heavily on anecdotal evidence as compared to data. So, my goal was to compile and present data into a intuitive, unbiased map. It is a neutral, side-by-side comparison where colors show direction and size of gap for any given metric. My hope is to continue to organize and extract data into this project so more people have relatively easy access to the numbers for an issue that strains our society to this day.
 
-
 ## Status
 
-This is a work in progress, being built incrementally. Current state:
+This is a work in progress, but here's where it's at right now:
 
-- **Database schema** — deployed to Postgres (hosted on [Neon](https://neon.tech)). Covers categories, states, metrics, sources, observations, law topics, and laws, with constraints that enforce the sourcing rules above (e.g., a law can't have a status without a citation; a missing data point must be explicitly flagged, not just left blank).
-- **Data pipeline** — one metric live end-to-end: median earnings by sex, for all 50 states + DC + the US, from the Census Bureau's American Community Survey. Each state's data point links to its own state-scoped Census page, not a generic one.
-- **API** — a FastAPI backend serving states, metrics, and per-state profiles.
-- **Frontend** — a React app with an interactive, color-coded US map for the live metric, plus a details panel showing a clicked state's values and sourcing.
+- **Live site:** the frontend is hosted on Vercel and the API on Render, with the database on Neon
+- **Database:** Postgres, hosted on [Neon](https://neon.tech). It has tables for categories, states, metrics, sources, observations, law topics and laws
+- **Data:** eleven metrics are loaded, by sex, for all 50 states (plus DC and the US where the source has them). They come from five sources, each loaded by its own script:
+  - U.S. Census Bureau (American Community Survey): earnings, labor force participation, poverty, bachelor's degrees, college enrollment, STEM degrees
+  - CDC / National Center for Health Statistics: life expectancy
+  - CDC WONDER: suicide and homicide mortality
+  - Bureau of Justice Statistics: incarceration rate
+  - Rutgers Center for American Women and Politics (CAWP): state legislative seats
+- **API:** a FastAPI backend that serves the states, the metrics, each metric's values for the map, and each state's full profile.
+- **Frontend:** React app with a switchable map/table view and a panel showing a clicked state's values next to the national figure
 
 See [Roadmap](#roadmap) for what's next.
 
@@ -24,71 +34,41 @@ See [Roadmap](#roadmap) for what's next.
 
 | Layer | Choice | Why |
 |---|---|---|
-| Database | PostgreSQL via [Neon](https://neon.tech) | Free serverless Postgres that only sleeps after 5 minutes idle (vs. competitors that pause for days) — fine for a side project with sporadic traffic. |
-| Backend | [FastAPI](https://fastapi.tiangolo.com/) (Python) | Lightweight, typed, fast to iterate on for a handful of read-only JSON endpoints. |
-| Data pipeline | Python scripts, `psycopg` | Idempotent ingest scripts that pull from public APIs (starting with the Census Bureau) and upsert into Postgres — safe to re-run as sources revise their data. |
+| Database | PostgreSQL via [Neon](https://neon.tech) | Free hosted Postgres |
+| Backend | [FastAPI](https://fastapi.tiangolo.com/) (Python) | Iterates fast for handful of read-only JSON endpoints. |
+| Data pipeline | Python scripts, `psycopg` | Scripts that pull from public APIs and upsert into Postgres |
 | Frontend | React + [Vite](https://vitejs.dev/) | Fast dev loop; component model fits a map + detail-panel UI well. |
-| Map rendering | [react-simple-maps](https://www.react-simple-maps.io/) + [d3-scale](https://d3js.org/d3-scale) | SVG-based US choropleth with a diverging color scale centered on zero (parity), so "no gap" reads as neutral gray rather than a color of its own. |
+| Map rendering | [react-simple-maps](https://www.react-simple-maps.io/) + [d3-scale](https://d3js.org/d3-scale) | Colors by how many times higher one sex's value is than the other's, on a log scale centered on parity |
+| Hosting | [Vercel](https://vercel.com) (frontend), [Render](https://render.com) (API) | Automate git pushes |
+
 
 ## Project structure
 
+
 ```
-db/        SQL schema and seed data (categories, states, metrics, law topics)
-pipeline/  Ingest scripts — one per data source, pull from a public API and upsert into Postgres
-api/       FastAPI backend serving the frontend
-web/       React + Vite frontend
+db/          Db schema and seed data 
+pipeline/    One script per data source; loads that source's figures into the database
+  data/      Files for sources without a usable API (CDC WONDER exports, BJS and CAWP tables)
+api/         FastAPI backend that serves data to the website
+web/         React + Vite frontend
 ```
-
-## Running it locally
-
-You'll need:
-- A Postgres database (this project uses Neon) with the schema from `db/001_schema.sql` and seed data from `db/002_seed.sql` applied.
-- A `.env` file (see `.env.example`) with `DATABASE_URL` and, for the Census pipeline, a free [Census API key](https://api.census.gov/data/key_signup.html) as `CENSUS_API_KEY`.
-
-Then, in three separate terminal tabs from the project root:
-
-```bash
-# 1. Backend API
-cd api
-uvicorn main:app --reload
-
-# 2. Frontend
-cd web
-npm install   # first time only
-npm run dev
-
-# 3. Data pipeline (one-off, re-run whenever a source updates)
-cd pipeline
-python3 ingest_median_earnings.py
-```
-
-The frontend expects the API at `http://127.0.0.1:8000` by default (set via `VITE_API_BASE` in `web/.env` if different). Open the address Vite prints, usually `http://localhost:5173`.
-
 ## Data model
 
-Every observation (a state's value for a metric, in a given year) points to a `sources` row describing exactly where it came from — publisher, title, release year, and a URL, scoped to that specific state wherever the source supports it. Nothing is stored pre-computed where it can be derived live instead: a gap between two values, for instance, is computed in a database view at query time, not written to a column that could drift out of sync with its inputs.
+Every data point has a `sources` row describing exactly where it came from scoped to that specific state wherever the source supports it. Nothing is stored pre-computed where it can be derived live instead: a gap between two values, for instance, is computed in a database view at query time, not written to a column that could drift out of sync with its inputs.
 
-Laws work differently from numeric metrics — they're not something a public API hands you in bulk, so each state's current law on a topic (and its citation) has to be researched and entered individually rather than pulled by a pipeline script.
+Laws work differently from numeric metrics. They must be researched and entered individually rather than pulled by a pipeline script.
 
 ## Metrics tracked
 
 **Economics:** median earnings, labor force participation, poverty rate
 **Education:** bachelor's degree rate, college enrollment, STEM degree share
 **Health & Safety:** life expectancy, suicide mortality, homicide mortality
-**Representation:** state legislative seats, statewide elected officials, incarceration rate
-**Law & Policy:** parental leave, equal pay protections, reproductive health law
-
-(Currently, only median earnings has data loaded — see [Roadmap](#roadmap).)
+**Representation:** state legislative seats, incarceration rate
+**Law & Policy: (PLANNED)** parental leave, equal pay protections, reproductive health law
 
 ## Roadmap
 
-- [ ] Ingest scripts for the remaining 11 metrics
 - [ ] Legal tracker: research and enter each state's law on the 3 law topics, with citations
-- [ ] State profile pages (all metrics for one state, with routing)
-- [ ] Compare page (two or more states side by side)
-- [ ] Issue pages (one metric across all states, in depth)
-- [ ] Timeline view (how a metric has changed over time)
-- [ ] Deployment — host the frontend and API somewhere public, point a custom domain at it, and swap local dev config (`http://127.0.0.1:8000`, etc.) for real URLs
 
 ## License
 
