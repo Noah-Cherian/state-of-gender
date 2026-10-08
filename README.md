@@ -54,13 +54,7 @@ Laws work differently from numeric metrics — they're not something a public AP
 
 ## Roadmap
 
-- [ ] Ingest scripts for the remaining 11 metrics
 - [ ] Legal tracker: research and enter each state's law on the 3 law topics, with citations
-- [ ] State profile pages (all metrics for one state, with routing)
-- [ ] Compare page (two or more states side by side)
-- [ ] Issue pages (one metric across all states, in depth)
-- [ ] Timeline view (how a metric has changed over time)
-- [ ] Deployment — host the frontend and API somewhere public, point a custom domain at it, and swap local dev config (`http://127.0.0.1:8000`, etc.) for real URLs
 
 ## License
 
