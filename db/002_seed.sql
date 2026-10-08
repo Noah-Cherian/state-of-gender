@@ -81,7 +81,7 @@ INSERT INTO metrics (slug, category_slug, name, definition, unit, sort_order) VA
      'Median annual earnings of full-time, year-round workers age 16 and over.',
      'usd', 1),
     ('labor_force_participation', 'economics', 'Labor force participation',
-     'Share of people age 16 and over who are working or actively looking for work.',
+     'Share of people age 20 to 64 who are working or actively looking for work.',
      'percent', 2),
     ('poverty_rate', 'economics', 'Poverty rate',
      'Share of people whose family income in the past 12 months was below the federal poverty threshold.',

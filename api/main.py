@@ -41,7 +41,10 @@ def health():
 
 @app.get("/api/metrics")
 def list_metrics():
-    """Every metric, grouped by category -- powers a dropdown or nav menu."""
+    """Every metric that has data loaded, grouped by category -- powers the
+    dropdown. A metric with no observations yet (or one that was shelved,
+    like statewide elected officials) is left out, so the dropdown never
+    offers an empty map. It reappears on its own once data is loaded."""
     with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         cur.execute(
             """
@@ -49,6 +52,9 @@ def list_metrics():
                    c.slug AS category_slug, c.name AS category_name
             FROM metrics m
             JOIN categories c ON c.slug = m.category_slug
+            WHERE EXISTS (
+                SELECT 1 FROM observations o WHERE o.metric_slug = m.slug
+            )
             ORDER BY c.sort_order, m.sort_order
             """
         )
