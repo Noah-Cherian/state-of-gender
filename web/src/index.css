@@ -195,6 +195,20 @@ body {
   box-shadow: 0 2px 8px rgba(11, 11, 11, 0.12);
   font-size: 0.9rem;
   min-width: 160px;
+  /* Taps and clicks pass straight through the tooltip to the state
+     underneath, so it can never block a state from being selected. */
+  pointer-events: none;
+}
+
+/* On a phone the map is small enough that a floating tooltip in the corner
+   covers the Northeast. Below this width it sits under the map instead,
+   showing whichever state was last tapped. */
+@media (max-width: 640px) {
+  .map-tooltip {
+    position: static;
+    margin-top: 8px;
+    box-shadow: none;
+  }
 }
 
 .map-tooltip p {
