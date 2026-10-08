@@ -2,7 +2,7 @@
 
 A source-first map of measurable gender differences across every US state — legal, economic, educational, health, and social. Every number on the map links back to the source where it came from (metadata like the publisher, the year, the precise definition, and (for laws) the statute itself).
 
-**Live site:** not yet deployed — running locally for now.
+**Live site:** (https://state-of-gender.vercel.app/)
 
 ## Why this exists
 
