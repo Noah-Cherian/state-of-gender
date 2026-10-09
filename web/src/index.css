@@ -184,6 +184,31 @@ body {
   position: relative;
 }
 
+/* Wraps the map or table so the loading message can sit on top of it. */
+.view-area {
+  position: relative;
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(252, 252, 251, 0.75); /* --surface-1, mostly opaque */
+  border-radius: 8px;
+}
+
+.loading-overlay p {
+  margin: 0;
+  padding: 10px 16px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
 .map-tooltip {
   position: absolute;
   top: 8px;
