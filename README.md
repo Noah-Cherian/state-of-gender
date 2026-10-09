@@ -60,11 +60,11 @@ Laws work differently from numeric metrics. They must be researched and entered 
 
 ## Metrics tracked
 
-**Economics:** median earnings, labor force participation, poverty rate
-**Education:** bachelor's degree rate, college enrollment, STEM degree share
-**Health & Safety:** life expectancy, suicide mortality, homicide mortality
-**Representation:** state legislative seats, incarceration rate
-**Law & Policy: (PLANNED)** parental leave, equal pay protections, reproductive health law
+- **Economics:** median earnings, labor force participation, poverty rate
+- **Education:** bachelor's degree rate, college enrollment, STEM degree share
+- **Health & Safety:** life expectancy, suicide mortality, homicide mortality
+- **Representation:** state legislative seats, incarceration rate
+- **Law & Policy: (PLANNED)** parental leave, equal pay protections, reproductive health law
 
 ## Roadmap
 
